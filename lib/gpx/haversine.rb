@@ -3,7 +3,7 @@ module GPX
 		RADIAN_PER_DEGREE = Math::PI/180.0
 		EARTH_RADIUS = 6371.00079
 		
-		def self.distance(latitudeA, longitudeA, latitudeB, longitudeB)
+		def self.distance(latitudeA, longitudeA, elevationA, latitudeB, longitudeB, elevationB)
 			latitudeA_rad = latitudeA*RADIAN_PER_DEGREE
 			latitudeB_rad = latitudeB*RADIAN_PER_DEGREE
 			
@@ -15,9 +15,9 @@ module GPX
 			c = 2.0 * Math::atan2(Math::sqrt(a), Math::sqrt(1.0-a))
 			
 			distance = EARTH_RADIUS * c
-			#ele = (ele1/1000.0-ele2/1000.0).abs
+			elevation = (elevationA/1000.0-elevationB/1000.0).abs
 			
-			#Math::sqrt(distance*distance + ele*ele)
+			Math::sqrt(distance**2 + elevation**2)
 		end
 	end
 end

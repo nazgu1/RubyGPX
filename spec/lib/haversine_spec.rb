@@ -14,12 +14,12 @@ describe GPX do
 	let(:katowice_distance) { 17.47 }
 	
 	it "should return proper distance from Zabrze, PL to Katowice, PL" do
-		distance = GPX::Haversine.distance(zabrze_lat, zabrze_lon, katowice_lat, katowice_lon)
+		distance = GPX::Haversine.distance(zabrze_lat, zabrze_lon, 0, katowice_lat, katowice_lon, 0)
 		should_equals_distance_with_precision(distance, katowice_distance)
 	end
 	
 	it "should return proper distance from Katowice, PL to Zabrze, PL" do
-		distance = GPX::Haversine.distance(katowice_lat, katowice_lon, zabrze_lat, zabrze_lon)
+		distance = GPX::Haversine.distance(katowice_lat, katowice_lon, 0, zabrze_lat, zabrze_lon, 0)
 		should_equals_distance_with_precision(distance, katowice_distance)
 	end
 	
@@ -30,19 +30,25 @@ describe GPX do
 	let(:london_distance) { 9554.72 }
   
   it "should return proper distance from Tokyo, JP to London, GB" do
-  	distance = GPX::Haversine.distance(tokyo_lat, tokyo_lon, london_lat, london_lon)
+  	distance = GPX::Haversine.distance(tokyo_lat, tokyo_lon, 0, london_lat, london_lon, 0)
   	should_equals_distance_with_precision(distance, london_distance)
   end
 
 	it "should return proper length of half of equinox" do
-		distance = GPX::Haversine.distance(0,0,0,180)
+		distance = GPX::Haversine.distance(0,0,0,0,180,0)
 		should_equals_distance_with_precision(distance, 20038)
 	end
   
   let(:same_point) { 44.654 }
   it "should return 0 for same lat/lon" do
-  	distance = GPX::Haversine.distance(same_point,same_point,same_point,same_point)
+  	distance = GPX::Haversine.distance(same_point,same_point,same_point,same_point,same_point,same_point)
   	distance.should eq 0
+  end
+  
+  let(:height) { 1233.54 }
+  it "should return proper height for same lat/lon" do
+		distance = GPX::Haversine.distance(same_point,same_point,0,same_point,same_point,height)
+		distance.should eq height/1000
   end
   
 end
