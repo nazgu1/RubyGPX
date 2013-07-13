@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe GPX do
 	
-	describe "respond to" do
+	describe "file with one point" do
 		before do
 			@gpx = GPX::GPX.new 'spec/assets/one_point.gpx'
 		end
@@ -24,21 +24,54 @@ describe GPX do
 		it { should respond_to :speeds }
 		it { should_not respond_to :speeds= }
 		
-		it "should return one point for file with one track point" do
-			@gpx.pointsCount.should eq(1)
+		it { should respond_to :distances }
+		it { should_not respond_to :distances= }
+		
+		it "should return one point" do
+			@gpx.pointsCount.should eq 1
 		end
 		
-		it "should return one elevation point for file with one track point" do
-			@gpx.elevations.count.should eq(1)
+		it "should return one elevation point" do
+			@gpx.elevations.count.should eq 1
 		end
 		
-		it "should return point time for file with one track point" do
+		it "should return point time" do
 			@gpx.times[0].should eq Time.parse('2009-10-17 18:37:26 UTC')
 		end
 		
+		it "should return one zero distance (because of one point)" do
+			@gpx.distances.count.should eq 1
+			@gpx.distances[0].should eq 0
+		end
 		
+		it "should return one zero speed (because of one point)" do
+			@gpx.speeds.count.should eq 1
+			@gpx.speeds[0].should eq 0
+		end
 	end
 	
+	describe "file with more than one track point" do
+		POINTS_COUNT = 6
+		
+		before do
+			@gpx = GPX::GPX.new 'spec/assets/two_tracks.gpx'
+		end
+		
+		subject { @gpx }
+		
+		it "should return all points in one array" do
+			@gpx.pointsCount.should eq POINTS_COUNT
+		end
+		
+		it "should return same count of distances elements as points" do
+			@gpx.distances.count.should eq POINTS_COUNT
+		end
+		
+		it "should return same count of speeds elements as points" do
+			@gpx.speeds.count.should eq POINTS_COUNT
+		end
+		
+	end
 	
 	it "return exeption for non-existing file" do
 		expect {
