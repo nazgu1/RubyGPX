@@ -4,13 +4,13 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require './version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "."
-  spec.version       = .::VERSION
+  spec.name          = "GPX"
+  spec.version       = GPX::VERSION
   spec.authors       = ["Dawid Dziurdzia"]
   spec.email         = ["ddziurdzia@me.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.description   = %q{Provide GPX file parsing}
+  spec.summary       = %q{Provide GPX file parsing}
+  spec.homepage      = "http://cycloo.pl"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec"
 end
