@@ -1,5 +1,6 @@
 require "gpx/version"
+require "gpx/haversine"
 
 module GPX
-  # Your code goes here...
+	
 end

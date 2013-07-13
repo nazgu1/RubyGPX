@@ -1,5 +1,5 @@
 require 'spec_helper'
 
 describe GPX do
-	it "should "
+	#it "should "
 end
