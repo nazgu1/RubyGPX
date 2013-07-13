@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'gpx/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "GPX"
+  spec.name          = "gpx"
   spec.version       = GPX::VERSION
   spec.authors       = ["Dawid Dziurdzia"]
   spec.email         = ["ddziurdzia@me.com"]
@@ -21,4 +21,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec"
+  
+  spec.add_dependency "nokogiri"
 end
