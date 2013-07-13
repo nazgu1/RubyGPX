@@ -1,6 +1,6 @@
-# .
+# GPX gem
 
-TODO: Write a gem description
+Gem that helps parsing and calculating stats form GPX files.
 
 ## Installation
 
