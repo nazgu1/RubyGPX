@@ -39,7 +39,7 @@ describe GPX do
 		end
 		
 		it "should return point time" do
-			@gpx.times[0].should eq Time.parse('2009-10-17 18:37:26 UTC')
+			@gpx.times[0].should eq 0
 		end
 		
 		it "should return point cumulated time" do
@@ -78,12 +78,40 @@ describe GPX do
 			@gpx.pointsCount.should eq POINTS_COUNT
 		end
 		
+		it "last point should not be nil" do
+			@gpx.coordinates.last.should_not eq nil
+		end
+		
 		it "should return same count of distances elements as points" do
 			@gpx.distances.count.should eq POINTS_COUNT
 		end
 		
+		it "last point should not be nil" do
+			@gpx.coordinates.last.should_not eq nil
+		end
+		
 		it "should return same count of speeds elements as points" do
 			@gpx.speeds.count.should eq POINTS_COUNT
+		end
+		
+		it "last point speed should not be nil" do
+			@gpx.speeds.last.should_not eq nil
+		end
+		
+		it "should return same count of time elements as points" do
+			@gpx.times.count.should eq POINTS_COUNT
+		end
+		
+		it "last point time should not be nil" do
+			@gpx.times.last.should_not eq nil
+		end
+		
+		it "should return same count of cumulated time elements as points" do
+			@gpx.timesCumulated.count.should eq POINTS_COUNT
+		end
+		
+		it "last point cumulated time should not be nil" do
+			@gpx.timesCumulated.last.should_not eq nil
 		end
 		
 	end

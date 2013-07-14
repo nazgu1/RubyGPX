@@ -32,25 +32,34 @@ module GPX
 			raise GPXInvalidFileException if doc.children.empty?
 			
 			coords = []
-			elevs  = []
-			times  = []
-			speeds = []
+			elevs = []
 			distances = [0.0]	
+			dates = []
+			times = [0.0]
 			timesCumulated = [0.0]
+			speeds = []
 			
 			doc.search('trkpt').map do |el|
 				coords.push [ el['lat'].to_f, el['lon'].to_f ]
-				times.push Time.parse(el.at('time').text)
+				dates.push Time.parse(el.at('time').text)
 				elevs.push el.at('ele').text.to_f
 			end
 			
+			dates.each_cons(2) do |s|
+				difference = s[1]-s[0]
+				times.push difference
+				timesCumulated.push timesCumulated.last + difference
+			end
+			
 			coords.zip(elevs).each_cons(2) do |x|
-				distances.push dif = Haversine.distance(x[0][0][0], x[0][0][1], x[0][1], x[1][0][0], x[1][0][1], x[1][1])
+				pointA = x[0]
+				pointB = x[1]
+				distances.push dif = Haversine.distance(pointA[0][0], pointA[0][1], pointA[1], pointB[0][0], pointB[0][1], pointB[1])
 			end
 			
 			speeds = distances.zip(times).collect do |d,dt|
-				dt = dt.to_f
-				d/dt*3600 unless dt==0
+				next d/dt*3600 unless dt==0
+				next 0 if dt==0
 			end
 			
 			@coordinates = coords
