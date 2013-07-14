@@ -24,6 +24,14 @@ module GPX
 		 	(@coordinates) ? @coordinates.count : 0
 		end
 		
+		def startDate
+			@dates.first
+		end
+		
+		def endDate
+			@dates.last
+		end
+		
 		def initialize(path)
 			doc = nil
 
@@ -74,6 +82,7 @@ module GPX
 			averageSpeed = 0
 			averageSpeed = distancesCumulated.last / timesCumulated.last * 3600 unless timesCumulated.last==0
 			
+			@dates = dates
 			@coordinates = coords
 			@elevations  = elevs
 			@times       = times
@@ -83,8 +92,6 @@ module GPX
 			@speeds      = speeds
 			@averageSpeed = averageSpeed
 			@maxSpeed = maxSpeed
-			@startDate = dates.first
-			@endDate = dates.last
 		end
 	end
 end
