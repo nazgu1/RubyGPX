@@ -2,7 +2,7 @@ require 'spec_helper'
 
 PRECISION = 0.002 # 0.01%
 
-describe GPX do
+describe GPX::Haversine do
 	def should_equals_distance_with_precision(checked_distance, real_distance)
     (checked_distance-real_distance).abs.should < real_distance * PRECISION
   end
