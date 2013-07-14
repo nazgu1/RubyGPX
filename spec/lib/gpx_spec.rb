@@ -30,6 +30,21 @@ describe GPX do
 		it { should respond_to :timesCumulated }
 		it { should_not respond_to :timesCumulated= }
 		
+		it { should respond_to :distancesCumulated }
+		it { should_not respond_to :distancesCumulated= }
+		
+		it { should respond_to :averageSpeed }
+		it { should_not respond_to :averageSpeed= }
+		
+		it { should respond_to :maxSpeed }
+		it { should_not respond_to :maxSpeed= }
+		
+		it { should respond_to :startDate }
+		it { should_not respond_to :startDate= }
+		
+		it { should respond_to :endDate }
+		it { should_not respond_to :endDate= }
+		
 		it "should return one point" do
 			@gpx.pointsCount.should eq 1
 		end
@@ -46,12 +61,34 @@ describe GPX do
 			@gpx.timesCumulated[0].should eq 0
 		end
 		
+		it "average speed should be zero" do
+			@gpx.averageSpeed.should eq 0
+		end
+		
+		it "max speed should be zero" do
+			@gpx.maxSpeed.should eq 0
+		end
+		
+		it "start date should not be nil" do
+			@gpx.startDate.should_not eq nil
+		end
+		
+		it "start date should equals end date" do
+			@gpx.startDate.should eq @gpx.endDate
+		end
+		
 		describe "should return one zero distance (because of one point)" do
 			it "distances count should equals one" do
 				@gpx.distances.count.should eq 1
 			end
 			it "first distance should be zero" do
 				@gpx.distances[0].should eq 0
+			end
+			it "cumulated distances count should equals one" do
+				@gpx.distancesCumulated.count.should eq 1
+			end
+			it "first cumulated distance should be zero" do
+				@gpx.distancesCumulated[0].should eq 0
 			end
 		end
 		
@@ -113,7 +150,22 @@ describe GPX do
 		it "last point cumulated time should not be nil" do
 			@gpx.timesCumulated.last.should_not eq nil
 		end
+
+		it "last point cumulated distance should not be zero" do
+			@gpx.distancesCumulated.last.should_not eq 0
+		end
 		
+		it "average speed should be positive" do
+			@gpx.averageSpeed.should > 0
+		end
+		
+		it "max speed should be positive" do
+			@gpx.maxSpeed.should > 0
+		end
+		
+		it "start date should not equals end date" do
+			@gpx.startDate.should_not eq @gpx.endDate
+		end
 	end
 	
 	it "return exeption for non-existing file" do
