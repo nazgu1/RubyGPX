@@ -7,7 +7,13 @@ require 'nokogiri'
 
 module GPX
 	class GPX
-		attr_reader :pointsCount, :elevations, :coordinates, :times, :speeds, :distances
+		attr_reader :pointsCount,
+								:elevations,
+								:coordinates,
+								:times,
+								:timesCumulated,
+								:speeds,
+								:distances
 		
 		def pointsCount
 		 	(@coordinates) ? @coordinates.count : 0
@@ -29,9 +35,8 @@ module GPX
 			elevs  = []
 			times  = []
 			speeds = []
-			distances = []
-			
-			distances = [0.0]
+			distances = [0.0]	
+			timesCumulated = [0.0]
 			
 			doc.search('trkpt').map do |el|
 				coords.push [ el['lat'].to_f, el['lon'].to_f ]
@@ -51,6 +56,7 @@ module GPX
 			@coordinates = coords
 			@elevations  = elevs
 			@times       = times
+			@timesCumulated = timesCumulated
 			@distances   = distances
 			@speeds      = speeds
 		end

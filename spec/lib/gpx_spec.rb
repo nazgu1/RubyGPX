@@ -27,6 +27,9 @@ describe GPX do
 		it { should respond_to :distances }
 		it { should_not respond_to :distances= }
 		
+		it { should respond_to :timesCumulated }
+		it { should_not respond_to :timesCumulated= }
+		
 		it "should return one point" do
 			@gpx.pointsCount.should eq 1
 		end
@@ -39,14 +42,26 @@ describe GPX do
 			@gpx.times[0].should eq Time.parse('2009-10-17 18:37:26 UTC')
 		end
 		
-		it "should return one zero distance (because of one point)" do
-			@gpx.distances.count.should eq 1
-			@gpx.distances[0].should eq 0
+		it "should return point cumulated time" do
+			@gpx.timesCumulated[0].should eq 0
 		end
 		
-		it "should return one zero speed (because of one point)" do
-			@gpx.speeds.count.should eq 1
-			@gpx.speeds[0].should eq 0
+		describe "should return one zero distance (because of one point)" do
+			it "distances count should equals one" do
+				@gpx.distances.count.should eq 1
+			end
+			it "first distance should be zero" do
+				@gpx.distances[0].should eq 0
+			end
+		end
+		
+		describe "should return one zero speed (because of one point)" do
+			it "speeds count should equals one" do
+				@gpx.speeds.count.should eq 1
+			end
+			it "first speed should be zero" do
+				@gpx.speeds[0].should eq 0
+			end
 		end
 	end
 	
