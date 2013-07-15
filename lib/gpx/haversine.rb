@@ -1,23 +1,32 @@
 module GPX
+	
+	# Class is responsible for calculating distance between two geo points (it considers point height)
 	class Haversine
 		RADIAN_PER_DEGREE = Math::PI/180.0
 		EARTH_RADIUS = 6371.00079
 		
-		def self.distance(latitudeA, longitudeA, elevationA, latitudeB, longitudeB, elevationB)
-			latitudeA_rad = latitudeA*RADIAN_PER_DEGREE
-			latitudeB_rad = latitudeB*RADIAN_PER_DEGREE
+		def self.distance(first_point, second_point)
+			first_latitude_rad = first_point.latitude*RADIAN_PER_DEGREE
+			second_latitude_rad = second_point.latitude*RADIAN_PER_DEGREE
 			
-			distance_latitude = (latitudeB-latitudeA) * RADIAN_PER_DEGREE
-			distance_longitude = (longitudeB-longitudeA) * RADIAN_PER_DEGREE
+			distance_longitude = (second_point.longitude-first_point.longitude) * RADIAN_PER_DEGREE
 			
-			a = (Math::sin(distance_latitude/2.0)**2.0) +
-						Math::cos(latitudeA_rad) * Math::cos(latitudeB_rad) * (Math::sin(distance_longitude/2.0)**2.0)
-			c = 2.0 * Math::atan2(Math::sqrt(a), Math::sqrt(1.0-a))
+			elevation = (first_point.elevation/1000.0-second_point.elevation/1000.0).abs
 			
-			distance = EARTH_RADIUS * c
-			elevation = (elevationA/1000.0-elevationB/1000.0).abs
-			
-			Math::sqrt(distance**2 + elevation**2)
+			triangulate(EARTH_RADIUS * calculate_distance(first_latitude_rad, second_latitude_rad, distance_longitude), elevation)
 		end
+		
+		private
+			def self.calculate_distance(first_latitude_rad, second_latitude_rad, distance_longitude)
+				distance_latitude = second_latitude_rad-first_latitude_rad
+				coefficient = (Math::sin(distance_latitude/2.0)**2.0) +
+							Math::cos(first_latitude_rad) * Math::cos(second_latitude_rad) * (Math::sin(distance_longitude/2.0)**2.0)
+							
+				2.0 * Math::atan2(Math::sqrt(coefficient), Math::sqrt(1.0-coefficient))
+			end
+			
+			def self.triangulate (distance, height) 
+				Math::sqrt(distance**2 + height**2)
+			end
 	end
 end

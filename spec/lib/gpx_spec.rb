@@ -12,8 +12,8 @@ describe GPX do
 		it { should respond_to :coordinates }
 		it { should_not respond_to :coordinates= }
 		
-		it { should respond_to :pointsCount }
-		it { should_not respond_to :pointsCount= }
+		it { should respond_to :points_count }
+		it { should_not respond_to :points_count= }
 		
 		it { should respond_to :elevations }
 		it { should_not respond_to :elevations= }
@@ -27,26 +27,26 @@ describe GPX do
 		it { should respond_to :distances }
 		it { should_not respond_to :distances= }
 		
-		it { should respond_to :timesCumulated }
-		it { should_not respond_to :timesCumulated= }
+		it { should respond_to :times_cumulated }
+		it { should_not respond_to :times_cumulated= }
 		
-		it { should respond_to :distancesCumulated }
-		it { should_not respond_to :distancesCumulated= }
+		it { should respond_to :distances_cumulated }
+		it { should_not respond_to :distances_cumulated= }
 		
-		it { should respond_to :averageSpeed }
-		it { should_not respond_to :averageSpeed= }
+		it { should respond_to :average_speed }
+		it { should_not respond_to :average_speed= }
 		
-		it { should respond_to :maxSpeed }
-		it { should_not respond_to :maxSpeed= }
+		it { should respond_to :max_speed }
+		it { should_not respond_to :max_speed= }
 		
-		it { should respond_to :startDate }
-		it { should_not respond_to :startDate= }
+		it { should respond_to :start_date }
+		it { should_not respond_to :start_date= }
 		
-		it { should respond_to :endDate }
-		it { should_not respond_to :endDate= }
+		it { should respond_to :end_date }
+		it { should_not respond_to :end_date= }
 		
 		it "should return one point" do
-			@gpx.pointsCount.should eq 1
+			@gpx.points_count.should eq 1
 		end
 		
 		it "should return one elevation point" do
@@ -58,23 +58,23 @@ describe GPX do
 		end
 		
 		it "should return point cumulated time" do
-			@gpx.timesCumulated[0].should eq 0
+			@gpx.times_cumulated[0].should eq 0
 		end
 		
 		it "average speed should be zero" do
-			@gpx.averageSpeed.should eq 0
+			@gpx.average_speed.should eq 0
 		end
 		
 		it "max speed should be zero" do
-			@gpx.maxSpeed.should eq 0
+			@gpx.max_speed.should eq 0
 		end
 		
 		it "start date should not be nil" do
-			@gpx.startDate.should_not eq nil
+			@gpx.start_date.should_not eq nil
 		end
 		
 		it "start date should equals end date" do
-			@gpx.startDate.should eq @gpx.endDate
+			@gpx.start_date.should eq @gpx.end_date
 		end
 		
 		describe "should return one zero distance (because of one point)" do
@@ -85,10 +85,10 @@ describe GPX do
 				@gpx.distances[0].should eq 0
 			end
 			it "cumulated distances count should equals one" do
-				@gpx.distancesCumulated.count.should eq 1
+				@gpx.distances_cumulated.count.should eq 1
 			end
 			it "first cumulated distance should be zero" do
-				@gpx.distancesCumulated[0].should eq 0
+				@gpx.distances_cumulated[0].should eq 0
 			end
 		end
 		
@@ -112,7 +112,7 @@ describe GPX do
 		subject { @gpx }
 		
 		it "should return all points in one array" do
-			@gpx.pointsCount.should eq POINTS_COUNT
+			@gpx.points_count.should eq POINTS_COUNT
 		end
 		
 		it "last point should not be nil" do
@@ -144,27 +144,27 @@ describe GPX do
 		end
 		
 		it "should return same count of cumulated time elements as points" do
-			@gpx.timesCumulated.count.should eq POINTS_COUNT
+			@gpx.times_cumulated.count.should eq POINTS_COUNT
 		end
 		
 		it "last point cumulated time should not be nil" do
-			@gpx.timesCumulated.last.should_not eq nil
+			@gpx.times_cumulated.last.should_not eq nil
 		end
 
 		it "last point cumulated distance should not be zero" do
-			@gpx.distancesCumulated.last.should_not eq 0
+			@gpx.distances_cumulated.last.should_not eq 0
 		end
 		
 		it "average speed should be positive" do
-			@gpx.averageSpeed.should > 0
+			@gpx.average_speed.should > 0
 		end
 		
 		it "max speed should be positive" do
-			@gpx.maxSpeed.should > 0
+			@gpx.max_speed.should > 0
 		end
 		
 		it "start date should not equals end date" do
-			@gpx.startDate.should_not eq @gpx.endDate
+			@gpx.start_date.should_not eq @gpx.end_date
 		end
 	end
 	
@@ -174,21 +174,19 @@ describe GPX do
 		}.to raise_error( GPX::GPXInvalidFileException )
 	end
 	
-	it "return zero exeption for wrong file type" do
-		expect {
-			gpx = GPX::GPX.new 'spec/assets/blank.gif'
-		}.to raise_error( GPX::GPXInvalidFileException )
+	let(:wrong_file_type_gpx) {GPX::GPX.new 'spec/assets/blank.gif'}
+	it "return no points for wrong file type" do
+		wrong_file_type_gpx.points_count.should eq 0
 	end
 	
-	it "return exeption for blank file" do
-		expect {
-			gpx = GPX::GPX.new 'spec/assets/blank.gpx'
-		}.to raise_error( GPX::GPXInvalidFileException )
+	let(:blank_file_gpx) {GPX::GPX.new 'spec/assets/blank.gpx'}
+	it "return no points for blank file" do
+		blank_file_gpx.points_count.should eq 0
 	end
 	
 	it "should return zero points for file with no track point" do
 		gpx = GPX::GPX.new 'spec/assets/empty.gpx'
-		gpx.pointsCount.should eq(0)
+		gpx.points_count.should eq(0)
 	end
 	
 end
