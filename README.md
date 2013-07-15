@@ -2,6 +2,8 @@
 
 Gem that helps parsing and calculating stats form GPX files.
 
+![Build status](https://magnum-ci.com/status/c944b4356269a42f413d73ca59820230.png)
+
 ## Installation
 
 Add this line to your application's Gemfile:
