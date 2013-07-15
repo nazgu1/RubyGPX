@@ -7,8 +7,8 @@ describe GPX::Haversine do
     (checked_distance-real_distance).abs.should < real_distance * PRECISION
   end
 	
-	let(:zabrze) { GPX::GeoPoint.new(18.7833,  50.3167, 0)  }
-	let(:katowice) { GPX::GeoPoint.new(19.0167, 50.2667, 0) }
+	let(:zabrze) { GPX::GeoPoint.new(latitude: 50.3167, longitude: 18.7833, elevation: 0)  }
+	let(:katowice) { GPX::GeoPoint.new(latitude: 50.2667, longitude: 19.0167, elevation: 0) }
 	let(:katowice_distance) { 17.47 }
 	
 	it "should return proper distance from Zabrze, PL to Katowice, PL" do
@@ -21,8 +21,8 @@ describe GPX::Haversine do
 		should_equals_distance_with_precision(distance, katowice_distance)
 	end
 	
-	let(:tokyo) { GPX::GeoPoint.new(139.7514, 35.6850, 0) }
-	let(:london) { GPX::GeoPoint.new(-0.1167, 51.5000, 0) }
+	let(:tokyo) { GPX::GeoPoint.new(latitude: 35.6850, longitude: 139.7514, elevation: 0) }
+	let(:london) { GPX::GeoPoint.new(latitude: 51.5000, longitude: -0.1167, elevation: 0) }
 	let(:london_distance) { 9554.72 }
   
   it "should return proper distance from Tokyo, JP to London, GB" do
@@ -31,17 +31,20 @@ describe GPX::Haversine do
   end
 
 	it "should return proper length of half of equinox" do
-		distance = GPX::Haversine.distance(GPX::GeoPoint.new(0,0,0), GPX::GeoPoint.new(0,180,0))
+		distance = GPX::Haversine.distance(
+			GPX::GeoPoint.new(latitude: 0, longitude: 0, elevation: 0),
+			GPX::GeoPoint.new(longitude: 0, longitude: 180, elevation: 0)
+		)
 		should_equals_distance_with_precision(distance, 20038)
 	end
   
-  let(:same_point) { GPX::GeoPoint.new 44.654, 44.654, 0 }
+  let(:same_point) { GPX::GeoPoint.new(latitude: 44.654, longitude: 44.654, elevation: 0) }
   it "should return 0 for same lat/lon" do
   	distance = GPX::Haversine.distance(same_point,same_point)
   	distance.should eq 0
   end
   
-  let(:height) { GPX::GeoPoint.new 44.654, 44.654, 1233.54 }
+  let(:height) { GPX::GeoPoint.new(latitude: 44.654, longitude: 44.654, elevation: 1233.54) }
   it "should return proper height for same lat/lon" do
 		distance = GPX::Haversine.distance(same_point, height)
 		distance.should eq height.elevation/1000

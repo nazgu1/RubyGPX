@@ -3,7 +3,7 @@ module GPX
 	class GeoPoint
 		attr_accessor :latitude, :longitude, :elevation
 		
-		def initialize(longitude, latitude, elevation)
+		def initialize(latitude: latitude, longitude:longitude, elevation:elevation)
 			self.latitude = latitude
 			self.longitude = longitude
 			self.elevation = elevation

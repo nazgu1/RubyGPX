@@ -3,7 +3,7 @@ require 'spec_helper'
 describe GPX::GeoPoint do
 	
 	before do
-		@geopoint = GPX::GeoPoint.new(0, 0, 0)
+		@geopoint = GPX::GeoPoint.new(latitude: 0, longitude: 0, elevation: 0)
 	end
 	
 	subject { @geopoint }

@@ -9,13 +9,13 @@ describe GPX do
 		
 		subject { @gpx }
 		
-		it { should respond_to :coordinates }
-		it { should_not respond_to :coordinates= }
+		it { should respond_to :points }
+		it { should_not respond_to :points= }
 		
 		it { should respond_to :points_count }
 		it { should_not respond_to :points_count= }
 		
-		it { should respond_to :elevations }
+		it { should_not respond_to :elevations }
 		it { should_not respond_to :elevations= }
 		
 		it { should respond_to :times }
@@ -27,10 +27,10 @@ describe GPX do
 		it { should respond_to :distances }
 		it { should_not respond_to :distances= }
 		
-		it { should respond_to :times_cumulated }
+		it { should_not respond_to :times_cumulated }
 		it { should_not respond_to :times_cumulated= }
 		
-		it { should respond_to :distances_cumulated }
+		it { should_not respond_to :distances_cumulated }
 		it { should_not respond_to :distances_cumulated= }
 		
 		it { should respond_to :average_speed }
@@ -49,16 +49,12 @@ describe GPX do
 			@gpx.points_count.should eq 1
 		end
 		
-		it "should return one elevation point" do
-			@gpx.elevations.count.should eq 1
-		end
-		
 		it "should return point time" do
-			@gpx.times[0].should eq 0
+			@gpx.times.first[:dt].should eq 0
 		end
 		
 		it "should return point cumulated time" do
-			@gpx.times_cumulated[0].should eq 0
+			@gpx.times.first[:t].should eq 0
 		end
 		
 		it "average speed should be zero" do
@@ -82,13 +78,10 @@ describe GPX do
 				@gpx.distances.count.should eq 1
 			end
 			it "first distance should be zero" do
-				@gpx.distances[0].should eq 0
-			end
-			it "cumulated distances count should equals one" do
-				@gpx.distances_cumulated.count.should eq 1
+				@gpx.distances.first[:ds].should eq 0
 			end
 			it "first cumulated distance should be zero" do
-				@gpx.distances_cumulated[0].should eq 0
+				@gpx.distances.first[:s].should eq 0
 			end
 		end
 		
@@ -99,6 +92,10 @@ describe GPX do
 			it "first speed should be zero" do
 				@gpx.speeds[0].should eq 0
 			end
+		end
+		
+		it "should have proper latitude" do
+			@gpx.points.first.latitude.should eq 47.644548
 		end
 	end
 	
@@ -116,15 +113,11 @@ describe GPX do
 		end
 		
 		it "last point should not be nil" do
-			@gpx.coordinates.last.should_not eq nil
+			@gpx.points.last.should_not eq nil
 		end
 		
 		it "should return same count of distances elements as points" do
 			@gpx.distances.count.should eq POINTS_COUNT
-		end
-		
-		it "last point should not be nil" do
-			@gpx.coordinates.last.should_not eq nil
 		end
 		
 		it "should return same count of speeds elements as points" do
@@ -143,16 +136,16 @@ describe GPX do
 			@gpx.times.last.should_not eq nil
 		end
 		
-		it "should return same count of cumulated time elements as points" do
-			@gpx.times_cumulated.count.should eq POINTS_COUNT
+		it "last point cumulated time should be positive" do
+			@gpx.times.last[:t].should > 0
 		end
 		
-		it "last point cumulated time should not be nil" do
-			@gpx.times_cumulated.last.should_not eq nil
+		it "last point distance should not be zero" do
+			@gpx.distances.last[:ds].should_not eq 0
 		end
 
 		it "last point cumulated distance should not be zero" do
-			@gpx.distances_cumulated.last.should_not eq 0
+			@gpx.distances.last[:s].should_not eq 0
 		end
 		
 		it "average speed should be positive" do
