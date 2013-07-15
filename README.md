@@ -18,7 +18,25 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    require 'gpx'
+    
+    gpx = GPX.new 'path_to_GPX_file'
+    
+    gpx.points_count    # get count of track points
+    
+    gpx.times.last[:t]  # get track length
+    gpx.times[n][:dt]   # get time delta for n-th and n-1-th track point
+    
+    gpx.distance[n][:s] # get distance between track start and n-th track point
+    gpx.distance[n][:ds] # get distance delta for track n-th and n-1-th track point
+    
+    gpx.max_speed       # get max value from all partial speeds (ds/dt)
+    gpx.average_speed   # get average speed for track
+    
+    gpx.speeds          # get partial speeds
+    
+    gpx.start_date      # date when track begins
+    gpx.end_date      # date when track ends
 
 ## Contributing
 
