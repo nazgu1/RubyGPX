@@ -177,7 +177,7 @@ describe GPX do
 
 	it "return exeption for non-existing file" do
 		expect {
-			gpx = GPX::GPX.new 'spec/assets/some_filt_that_not_exists_25363.gpx'
+			GPX::GPX.new 'spec/assets/some_filt_that_not_exists_25363.gpx'
 		}.to raise_error( GPX::GPXInvalidFileException )
 	end
 
