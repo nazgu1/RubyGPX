@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'gpx/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "gpx"
+  spec.name          = "gpx_track"
   spec.version       = GPX::VERSION
   spec.authors       = ["Dawid Dziurdzia"]
   spec.email         = ["ddziurdzia@me.com"]
